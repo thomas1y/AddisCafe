@@ -3,3 +3,10 @@
   margin:0;
   box-sizing: border-box;
 }
+body{
+  min-height:100vh;
+  font-family: 'Playfair Display', serif;
+}
+a{
+  text-decoration:none;
+}
