@@ -1,8 +1,26 @@
-#navbar{
-    background: rgba(12,11,9,0.6);
-    border-bottom: 1px solid rgba(12,11,9,0.6)
+#navbar {
+    background: rgba(12,11,9,1) !important;
+    border-bottom: 1px solid rgba(12,11,9,0.6);
     transition: all 0.5s;
     z-index: 997;
     padding: 15px 0;
     top: 40px;
+}
+
+#navbar .logo{
+    font-size:28px;
+    margin:0;
+    padding:0;
+    line-height:1;
+    font-weight: 300;
+    letter-spacing:1px;
+    text-transform: ;
+    font-family:'poppins',sans-serif
+}
+#navbar .logo a{
+    color:#fff;
+    text-decoration: none;
+}
+#header .logo img {
+    max-height: 40px;
 }
