@@ -1,26 +1,25 @@
-import React, {useState, useEffect} from 'react'
-import './Navbar.css'
-import { navs } from '../../data/data'
+import React, { useState } from 'react';
+import './Navbar.css';
+import { navs } from '../../data/data';
+import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
 
 const Navbar = () => {
-   const [navList, setNavList] = useState(navs);
-   const [open, setOpen] = useState(false);
+  const [navList, setNavList] = useState(navs);
+  const [open, setOpen] = useState(false);
 
-   const handleToggleMenu =() => {
+  const handleToggleMenu = () => {
     setOpen(!open);
-   };
-   return (
+  };
+
+  return (
     <div id="navbar">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
         <h1 className="logo me-auto me-lg-0">
           <a href="/">AddisCafe</a>
         </h1>
-  
-        {/* ✅ Fixed: changed from id="navbar" to className="navbar" */}
+
         <div
-          className={`navbar order-last order-lg-0 ${
-            open ? 'navbar-mobile' : ''
-          }`}
+          className={`navbar order-last order-lg-0 ${open ? 'navbar-mobile' : ''}`}
         >
           <ul>
             {navList.map((nav) => (
@@ -38,16 +37,32 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-  
+
+          {/* Mobile Menu Toggle Icon */}
           <i
             className="bi bi-list mobile-nav-toggle"
             onClick={handleToggleMenu}
           ></i>
         </div>
+
+        {/* Added section to the right side of the navbar */}
+        <div className="navbar-right d-flex align-items-center">
+          {/* Search Icon */}
+          <div className="navbar-icon">
+            <FaSearch className="search-icon" />
+          </div>
+
+          {/* Cart Icon */}
+          <div className="navbar-icon ms-3">
+            <FaShoppingCart className="cart-icon" />
+          </div>
+
+          {/* Sign Up Button */}
+          <button className="btn btn-signup ms-3">Sign Up</button>
+        </div>
       </div>
     </div>
   );
-  
-}
+};
 
-export default Navbar
+export default Navbar;

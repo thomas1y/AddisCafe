@@ -47,6 +47,56 @@
   align-items: center;
   flex: 1;
 }
+/* Navbar Right Side Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.navbar-icon {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.search-icon,
+.cart-icon {
+  font-size: 24px;
+}
+
+.navbar-icon:hover {
+  color: #d9ba85;
+}
+
+/* Sign Up Button */
+.btn-signup {
+  background-color: #d9ba85;
+  border: none;
+  color: #fff;
+  padding: px 13px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.3s;
+}
+
+.btn-signup:hover {
+  background-color: #c4956a;
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 991px) {
+  .navbar-right {
+    display: none; /* Hides right section on mobile */
+  }
+
+  .navbar.navbar-mobile {
+    left: 0;
+  }
+}
+
 
 .navbar ul {
   margin: 0;
@@ -95,6 +145,7 @@
   color: #d9ba85;
 }
 
+/* Dropdown (desktop only) */
 .navbar .dropdown ul {
   display: block;
   position: absolute;
@@ -157,15 +208,15 @@
 /* Mobile Navigation Styles */
 .mobile-nav-toggle {
   position: absolute;
-  top: 16px;
+  top: 50%;
   right: 20px;
+  transform: translateY(-50%);
   color: #fff;
   font-size: 28px;
   cursor: pointer;
   display: none;
   z-index: 1001;
-  line-height: 0;
-  transition: 0.5s;
+  line-height: 1;
 }
 
 @media (max-width: 991px) {
@@ -176,15 +227,15 @@
   .navbar {
     position: fixed;
     top: 0;
-    right: -100%;
-    width: 250px;
+    left: -100%;
+    width: 100vw;
     height: 100vh;
-    background: rgba(12, 11, 9, 1);
+    background: #000;
     padding: 40px 20px;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    transition: right 0.4s ease-in-out;
+    transition: left 0.4s ease-in-out;
     z-index: 1000;
   }
 
@@ -195,7 +246,7 @@
   }
 
   .navbar.navbar-mobile {
-    right: 0;
+    left: 0;
   }
 
   .navbar.navbar-mobile ul {
@@ -206,5 +257,21 @@
     padding: 12px 0;
     width: 100%;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
   }
+
+  .navbar.navbar-mobile a:hover {
+    color: #d9ba85;
+  }
+}
+
+/* Drawer Overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
