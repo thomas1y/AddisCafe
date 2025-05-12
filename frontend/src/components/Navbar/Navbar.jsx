@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css';
 import { navs } from '../../data/data';
 import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
@@ -6,10 +6,24 @@ import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
 const Navbar = () => {
   const [navList, setNavList] = useState(navs);
   const [open, setOpen] = useState(false);
+  const [scroll, setScroll] = useState(0);
 
+  useEffect(() =>{
+    window.addEventListener('scroll',()=>{
+      setScroll(window.scrollY);
+    });
+    return()=>{
+      window.removeEventListener('scroll',()=>{
+        setScroll(window.scrollY);
+      })
+    }
+  }, [scroll]);
+    
   const handleToggleMenu = () => {
     setOpen(!open);
   };
+  const handleScrollTo = (section) => {};
+  const handleNavActive = () => {};
 
   return (
     <div id="navbar">

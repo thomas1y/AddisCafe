@@ -6,6 +6,8 @@
 body{
   min-height:100vh;
   font-family: 'Playfair Display', serif;
+  background-color: rgba(12, 11, 9, 1);
+  color: #fff;
   
 }
 a{
