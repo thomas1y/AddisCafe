@@ -25,7 +25,7 @@ const Hero = () => {
             <h2>Delivering great food for more than 18 years!</h2>
             <div className='btns'>
               <HeroBtn name='our menu' target='menu' />
-              <HeroBtn name='book a table' target='book-a-table' />
+              
             </div>
           </div>
           <div

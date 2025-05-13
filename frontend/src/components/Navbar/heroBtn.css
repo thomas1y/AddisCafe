@@ -1,4 +1,5 @@
 #hero .btn-hero {
+    background:rgb(238, 137, 112) important!;
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 0.5px;
@@ -11,9 +12,10 @@
     color: white;
     border: 2px solid #ccda45e;
     cursor: pointer;
+    text-decoration: none;
 }
 
 #hero .btn-hero:hover{
-    background: #ccda45e;
+    background:  #c4956a;
     color: #fff;
 }
