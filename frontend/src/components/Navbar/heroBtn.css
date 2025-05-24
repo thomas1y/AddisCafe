@@ -1,5 +1,5 @@
 #hero .btn-hero {
-    background:rgb(238, 137, 112) important!;
+
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 0.5px;
@@ -10,7 +10,7 @@
     transition: 0.3s;
     line-height: 1;
     color: white;
-    border: 2px solid #ccda45e;
+    border: 2px solid #ccda45e0;
     cursor: pointer;
     text-decoration: none;
 }
