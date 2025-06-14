@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
-import { navs } from '../../data/data';
+import { navs } from '../data/data';
 import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
 
 const Navbar = () => {

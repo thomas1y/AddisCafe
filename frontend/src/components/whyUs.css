@@ -1,0 +1,92 @@
+.why-us {
+  background: black;
+}
+
+/* Headings/Paragraph styles remain unchanged */
+.why-us .box {
+  padding: 50px 30px;
+  box-shadow: 0px 2px 15px rgba(0,0,0,0.1);
+  transition: all ease-in-out 0.3s;
+  background: #1a1814;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.why-us .box span {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: #cda45e;
+}
+
+.why-us .box h4 {
+  font-size: 24px;
+  font-weight: 600;
+  padding: 0;
+  margin: 20px 0;
+  color: rgba(255,255,255,0.8);
+}
+
+.why-us .box p {
+  color: #aaaaaa;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.why-us .box:hover {
+  background: #cda45e;
+  padding: 30px 30px 70px 30px;
+  box-shadow: 10px 15px 30px rgba(0,0,0,0.18);
+}
+
+.why-us .box:hover span,
+.why-us .box:hover h4,
+.why-us .box:hover p {
+  color: #fff;
+}
+
+/* ✅ Force equal height layout */
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.card-column {
+  flex: 1 1 calc(33.333% - 1rem);
+  display: flex;
+}
+/* h2: small, like a paragraph, with line to the right */
+.small-heading-with-line {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  display: inline-block;
+  padding-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.small-heading-with-line::after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 12px;
+  width: 80px;             /* ✅ Adjust this value to control length */
+  height: 1.5px;
+  background-color: white;
+  opacity: 0.6;
+}
+
+
+
+
+/* p element styled like a heading and colored like card numbers */
+.large-highlight {
+  font-size: 24px;
+  font-weight: 700;
+  color: #cda45e;
+  margin-bottom: 2rem;
+}

@@ -1,7 +1,10 @@
 import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import Hero from './components/Navbar/Hero'
-import About from './components/Navbar/About'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import BackToTopBtn from './components/BackToTopBtn'
+import WhyUs from './components/WhyUs'
+import ExploreMenu from './components/ExploreMenu'
 
 const App = () => {
   return (
@@ -11,6 +14,9 @@ const App = () => {
       <main id='main'>
         <About />
       </main>
+      <BackToTopBtn />
+      <WhyUs />
+      <ExploreMenu />
     </div>
   )
 }

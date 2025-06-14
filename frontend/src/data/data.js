@@ -1,23 +1,25 @@
-export const whyUs = [
+
+// src/components/Navbar/whyUsData.js
+
+export const whyUsData = [
   {
     id: 1,
-    title: 'Lorem Ipsum',
-    content: `Ulamco laboris nisi ut aliquip ex ea commodo consequat. Et
-        consectetur ducimus vero placeat`,
+    title: 'Expert Team',
+    content: 'Our team consists of industry experts\nwith years of experience.',
   },
   {
     id: 2,
-    title: 'Repellat Nihil',
-    content: `Dolorem est fugiat occaecati voluptate velit esse. Dicta
-    veritatis dolor quod et vel dire leno para dest`,
+    title: 'Customer First',
+    content: 'We prioritize our clients’ needs\nand satisfaction above all else.',
   },
   {
     id: 3,
-    title: 'Ad ad velit qui',
-    content: `Molestiae officiis omnis illo asperiores. Aut doloribus vitae
-    sunt debitis quo vel nam quis`,
+    title: 'Proven Results',
+    content: 'We have a strong track record\nof successful projects.',
   },
 ];
+
+
 
 export const menu = [
   {
