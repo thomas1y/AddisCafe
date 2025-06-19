@@ -1,0 +1,31 @@
+.food-display {
+    margin-top: 30px;
+    padding: 40px 20px;
+    //background-color: #000;
+    color: white;
+    text-align: center;
+}
+
+.food-display h2 {
+    font-size: max(2vw, 24px);
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: black;            /* Explicit white color */
+    margin-left: 100px;
+    margin-right: auto;
+   max-width: 1200px;
+   padding-left: 20px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.food-display-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    row-gap: 50px;
+    max-width: 1200px;
+    margin: auto;
+    /* ⛔️ Remove this if present */
+    /* padding: 0 20px; */
+}
