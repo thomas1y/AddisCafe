@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Navbar.css';
 import { navs } from '../data/data';
+import { assets } from '../assets/images/assets';
 import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
 
 const Navbar = () => {
@@ -28,9 +29,9 @@ const Navbar = () => {
   return (
     <div id="navbar">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
-        <h1 className="logo me-auto me-lg-0">
-          <a href="/">AddisCafe</a>
-        </h1>
+        <div className='logo'>
+            <img src={assets.logo} alt='' />
+        </div>
 
         <div
           className={`navbar order-last order-lg-0 ${open ? 'navbar-mobile' : ''}`}
