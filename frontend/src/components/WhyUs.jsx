@@ -5,7 +5,7 @@ import './whyUs.css';
 
 const WhyUsSection = () => {
   return (
-    <section id="why-us" className="why-us">
+    <section id="whyus" className="why-us">
       <div className="container">
         <div className="row">
           <h2 className="small-heading-with-line">Why Us</h2>

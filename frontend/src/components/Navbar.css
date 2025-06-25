@@ -1,11 +1,14 @@
 /* General Navbar Styles */
 #navbar {
+  position: fixed;     /* Make navbar fixed */
+  top: 0;              /* Stick to very top */
+  left: 0;
+  right: 0;
   background: rgba(12, 11, 9, 1) !important;
   border-bottom: 1px solid rgba(12, 11, 9, 0.6);
   transition: all 0.5s;
   z-index: 997;
   padding: 10px 0;
-  top: 40px;
   display: flex;
   align-items: center;
 }
@@ -218,6 +221,18 @@
   z-index: 1001;
   line-height: 1;
 }
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #cda45e;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
 
 @media (max-width: 991px) {
   .mobile-nav-toggle {

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
+
+
 import "./CartPage.css";
 
 const CartPage = () => {

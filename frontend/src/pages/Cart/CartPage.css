@@ -1,5 +1,20 @@
 .cart {
   margin-top: 100px;
+  padding: 40px 20px;
+  
+  min-height: 100vh;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart-items {
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .cart-item-title {
@@ -17,6 +32,7 @@
 
 .cart-items-item img {
   width: 50px;
+  border-radius: 6px;
 }
 
 .cart hr {
@@ -27,13 +43,20 @@
 
 .cart-items-item .cross {
   cursor: pointer;
+  color: red;
+  font-weight: bold;
 }
 
 .cart-bottom {
-  margin-top: 80px;
+  margin-top: 40px;
+  width: 100%;
+  max-width: 1000px;
   display: flex;
   justify-content: space-between;
-  gap: max(12vw, 20px);
+  gap: max(5vw, 20px);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .cart-total {
@@ -46,8 +69,9 @@
 .cart-total-details {
   display: flex;
   justify-content: space-between;
-  color: #555;
+  color: #333;
 }
+
 .cart-total hr {
   margin: 10px 0px;
 }
@@ -55,15 +79,17 @@
 .cart-total button {
   border: none;
   color: white;
-  width: max(15vw, 200px);
+  width: 100%;
   padding: 12px 0px;
   border-radius: 4px;
   cursor: pointer;
+  background-color:rgb(13, 14, 13);
 }
 
 .cart-promocode {
   flex: 1;
 }
+
 .cart-promocode p {
   color: #555;
 }
@@ -75,28 +101,33 @@
   align-items: center;
   background-color: #eaeaea;
   border-radius: 4px;
+  overflow: hidden;
 }
 
 .cart-promocode-input input {
   background: transparent;
   border: none;
   outline: none;
-  padding-left: 10px;
+  padding: 12px 10px;
+  flex: 1;
 }
+
 .cart-promocode-input button {
-  width: max(1vw, 150px);
-  padding: 12px 5px;
+  padding: 12px 20px;
   border: none;
   color: white;
-  border-radius: 4px;
+  background-color:rgb(12, 12, 12);
+  border-radius: 0;
+  cursor: pointer;
 }
 
 @media (max-width: 1050px) {
   .cart-bottom {
-    display: flex;
     flex-direction: column;
   }
-  .cart-promocode {
-    justify-content: start;
+
+  .cart-items,
+  .cart-bottom {
+    width: 95%;
   }
 }

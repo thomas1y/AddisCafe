@@ -1,30 +1,35 @@
-import React, {useState} from 'react'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import BackToTopBtn from './components/BackToTopBtn'
-import WhyUs from './components/WhyUs'
-import ExploreMenu from './components/ExploreMenu'
-import FoodDisplay from './components/FoodDisplay'
-import Footer from './components/Footer'
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import LoginPopup from "./components/LoginPopup";
+
+import HomePage from "./pages/Home/HomePage";
+import CartPage from "./pages/Cart/CartPage";
+import PlaceOrderPage from "./pages/PlaceOrder/PlaceOrderPage";
+import Verify from "./pages/Verify/Verify";
+import MyOrders from "./pages/MyOrders/MyOrders";
+import ErrorPage from "./ErrorPage";
 
 const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
 
-   const [category, setCategory] = useState('All');
   return (
-    <div>
-      <Navbar />
-      <Hero />
-      <main id='main'>
-        <About />
-      </main>
-      <BackToTopBtn />
-      <WhyUs />
-      <ExploreMenu category={category} setCategory={setCategory}/>
-      <FoodDisplay category={category}/>
-      <Footer />
-    </div>
-  )
-}
+    <>
+      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      <div className="app">
+        <Navbar showLogin={showLogin} setShowLogin={setShowLogin} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/order" element={<PlaceOrderPage />} />
+          <Route path="/verify-payment" element={<Verify />} />
+          <Route path="/myorders" element={<MyOrders />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </div>
+    </>
+  );
+};
 
-export default App
+export default App;

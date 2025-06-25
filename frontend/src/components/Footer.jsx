@@ -3,7 +3,7 @@ import './footer.css';
 import { assets } from '../assets/images/assets';
 const Footer = () => {
   return (
-    <div className='footer' id='footer'>
+    <div className='footer' id='contact'>
         <div className='footer-content'>
             <div className='footer-content-left'>
                  <img src={assets.logo} alt='' />

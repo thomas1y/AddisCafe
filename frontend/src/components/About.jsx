@@ -1,7 +1,5 @@
 import React from 'react';
 import './about.css';
-import aboutImg from '../assets/images/about.jpg';
-import aboutBg from '../assets/images/about-bg.jpg';
 
 const About = () => {
   return (
@@ -9,7 +7,7 @@ const About = () => {
       id='about'
       className='about'
       style={{
-        backgroundImage: `url(${aboutBg})`,
+        backgroundImage: `url(/images/about-bg.jpg)`,
       }}
     >
       <div className='container' data-aos='fade-up'>
@@ -20,7 +18,7 @@ const About = () => {
             data-aos-delay='100'
           >
             <div className='about-img'>
-              <img src={aboutImg} alt='About' />
+              <img src="/images/about.jpg" alt='About' />
             </div>
           </div>
 

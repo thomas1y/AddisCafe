@@ -1,79 +1,121 @@
-import React, { useEffect, useState } from 'react';
-import './Navbar.css';
-import { navs } from '../data/data';
-import { assets } from '../assets/images/assets';
-import { FaSearch, FaShoppingCart } from 'react-icons/fa'; // Importing icons
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { StoreContext } from "../context/StoreContext.jsx";
+import { navs } from "../data/data";
+import "./Navbar.css";
 
-const Navbar = () => {
-  const [navList, setNavList] = useState(navs);
+const Navbar = ({ setShowLogin }) => {
   const [open, setOpen] = useState(false);
-  const [scroll, setScroll] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { cartItems } = useContext(StoreContext);
 
-  useEffect(() =>{
-    window.addEventListener('scroll',()=>{
-      setScroll(window.scrollY);
-    });
-    return()=>{
-      window.removeEventListener('scroll',()=>{
-        setScroll(window.scrollY);
-      })
+  const getTotalCartItems = () =>
+    Object.values(cartItems).reduce((total, qty) => total + (qty > 0 ? qty : 0), 0);
+
+  // Smooth scroll helper
+  const handleScrollTo = (e, target) => {
+    e.preventDefault();
+    const id = target.replace("#", "");
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      setOpen(false);
+      window.history.replaceState(null, null, target);
     }
-  }, [scroll]);
-    
-  const handleToggleMenu = () => {
-    setOpen(!open);
   };
-  const handleScrollTo = (section) => {};
-  const handleNavActive = () => {};
+
+  // Handle "Home" nav click — scroll to #hero and clear path if not root
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById("hero");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      handleScrollTo(e, "#hero");
+    }
+    setOpen(false);
+  };
+
+  const isActive = (target) => {
+    if ((!location.hash || location.hash === "#hero") && target === "#hero") {
+      return true; // Home active by default
+    }
+    return location.hash === target;
+  };
+
+  useEffect(() => {
+    setOpen(false); // close mobile nav on route change
+  }, [location]);
 
   return (
     <div id="navbar">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
-        <div className='logo'>
-            <img src={assets.logo} alt='' />
+        {/* Logo - goes to home */}
+        <div className="logo">
+          <Link to="/" onClick={handleHomeClick}>
+            <img src="/images/logo.png" alt="Logo" />
+          </Link>
         </div>
 
-        <div
-          className={`navbar order-last order-lg-0 ${open ? 'navbar-mobile' : ''}`}
-        >
+        {/* Nav links */}
+        <div className={`navbar order-last order-lg-0 ${open ? "navbar-mobile" : ""}`}>
           <ul>
-            {navList.map((nav) => (
-              <li key={nav.id}>
-                <a
-                  className={`nav-link scrollto ${nav.active ? 'active' : ''}`}
-                  onClick={() => handleScrollTo(nav.target)}
-                >
-                  {nav.name === 'Home' ? (
+            {navs.map(({ id, name, target }) => (
+              <li key={id}>
+                {name === "Home" ? (
+                  <a
+                    href="#hero"
+                    className={`nav-link scrollto ${isActive("#hero") ? "active" : ""}`}
+                    onClick={handleHomeClick}
+                  >
                     <i className="bi bi-house-door-fill"></i>
-                  ) : (
-                    nav.name
-                  )}
-                </a>
+                  </a>
+                ) : (
+                  <a
+                    href={target}
+                    className={`nav-link scrollto ${isActive(target) ? "active" : ""}`}
+                    onClick={(e) => handleScrollTo(e, target)}
+                  >
+                    {name}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
 
-          {/* Mobile Menu Toggle Icon */}
+          {/* Mobile nav toggle */}
           <i
             className="bi bi-list mobile-nav-toggle"
-            onClick={handleToggleMenu}
+            onClick={() => setOpen(!open)}
           ></i>
         </div>
 
-        {/* Added section to the right side of the navbar */}
+        {/* Right side: icons & signup */}
         <div className="navbar-right d-flex align-items-center">
-          {/* Search Icon */}
           <div className="navbar-icon">
             <FaSearch className="search-icon" />
           </div>
 
-          {/* Cart Icon */}
-          <div className="navbar-icon ms-3">
-            <FaShoppingCart className="cart-icon" />
+          <div className="navbar-icon ms-3 position-relative">
+            <Link to="/cart">
+              <FaShoppingCart className="cart-icon" style={{ color: "#cda45e" }} />
+            </Link>
+            {getTotalCartItems() > 0 && (
+              <span className="cart-badge">{getTotalCartItems()}</span>
+            )}
           </div>
 
-          {/* Sign Up Button */}
-          <button className="btn btn-signup ms-3">Sign Up</button>
+          <button
+            className="btn btn-signup ms-3"
+            onClick={() => setShowLogin(true)}  // Open modal on click
+          >
+            Sign Up
+          </button>
         </div>
       </div>
     </div>
