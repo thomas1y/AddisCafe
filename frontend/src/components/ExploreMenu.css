@@ -1,26 +1,30 @@
-
-   
 .explore-menu {
-  background-color: black;
+  background-image: url('/images/bg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   color: white;
+  font-family: var(--font-base); /* ✅ Applied here */
   padding: 1rem 2rem 2rem 5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 2rem;
+  min-height: 300px;
 }
 
 .explore-menu h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
   text-align: left;
 }
 
 .explore-menu-text {
   max-width: 700px;
-  font-size: 1rem;
+  font-size: 20px;
   line-height: 1.6;
   text-align: left;
+  color: #aaaaaa; /* ✅ similar to why-us p */
 }
 
 .explore-menu-list {
@@ -29,6 +33,8 @@
   align-items: center;
   flex-wrap: nowrap;
   gap: 0.5rem;
+  margin-left: 70px;
+  margin-right:70px;
 }
 
 .explore-menu-list-item {
@@ -36,7 +42,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  flex: 0 0 auto; /* Important for horizontal scroll */
+  flex: 0 0 auto;
   width: 100px;
 }
 
@@ -58,6 +64,7 @@
   margin: 0;
   text-align: center;
   font-size: 0.95rem;
+  color: #cda45e; /* optional highlight */
 }
 
 .explore-menu hr {
@@ -73,7 +80,7 @@
   padding: 2px;
 }
 
-/* === Mobile Devices: Enable Horizontal Scrolling === */
+/* Mobile support */
 @media (max-width: 600px) {
   .explore-menu-list {
     overflow-x: auto;

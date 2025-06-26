@@ -1,15 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_API, NODE_ENV } from "../../constant";
-
-
+import { BASE_API } from "../../constant";
 
 export const StoreContext = createContext(null);
-const StoreContextProvider = (props) => {
 
+const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = BASE_API
-  const [token, setToken] = useState("");
+  const url = BASE_API;
+  const [token, setToken] = useState(() => localStorage.getItem("token") || "");
   const [foodList, setFoodList] = useState([]);
 
   const addToCart = async (itemId) => {
@@ -27,6 +25,7 @@ const StoreContextProvider = (props) => {
       );
     }
   };
+
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
     if (token) {
@@ -37,10 +36,10 @@ const StoreContextProvider = (props) => {
       );
     }
   };
-  const getTotalCartItems = () => {
-  return Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
-};
 
+  const getTotalCartItems = () => {
+    return Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
+  };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
@@ -70,13 +69,21 @@ const StoreContextProvider = (props) => {
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
-      if (localStorage.getItem("token")) {
-        setToken(localStorage.getItem("token"));
-        await loadCartData(localStorage.getItem("token"));
+      if (token) {
+        await loadCartData(token);
       }
     }
     loadData();
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    // Persist token in localStorage if it changes
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
 
   const contextValue = {
     cartItems,
@@ -90,6 +97,7 @@ const StoreContextProvider = (props) => {
     setToken,
     foodList,
   };
+
   return (
     <StoreContext.Provider value={contextValue}>
       {props.children}

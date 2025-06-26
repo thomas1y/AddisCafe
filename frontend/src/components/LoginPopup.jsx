@@ -15,45 +15,46 @@ const LoginPopup = ({ setShowLogin }) => {
     password: "",
   });
 
-  const onLogin = async (event) => {
-    event.preventDefault();
-    let newUrl = url;
-    if (currentState === "Login") {
-      newUrl += "/api/user/login";
-      const response = await axios.post(newUrl, userData);
-      if (response.data.success) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
-        setShowLogin(false);
-      } else {
-        alert(response.data.message);
-      }
-    } else {
-      newUrl += "/api/user/register";
-      let response;
-      try {
-        response = await axios.post(newUrl, userData);
-      } catch (error) {
-        console.log(error);
-      }
+ const onLogin = async (event) => {
+  event.preventDefault();
+  let newUrl = url;
 
-      if (response.data.success) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
-        setShowLogin(false);
-        alert(response.data.message);
-      } else {
-        alert(response.data.message);
-      }
+  if (currentState === "Login") {
+    newUrl += "/api/user/login";
+    const response = await axios.post(newUrl, userData);
+    if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userName", response.data.name); // ✅ STORE NAME
+      setShowLogin(false);
+    } else {
+      alert(response.data.message);
     }
-  };
+  } else {
+    newUrl += "/api/user/register";
+    let response;
+    try {
+      response = await axios.post(newUrl, userData);
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (response?.data?.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userName", response.data.name); // ✅ STORE NAME
+      setShowLogin(false);
+      alert(response.data.message);
+    } else {
+      alert(response?.data?.message || "Registration failed");
+    }
+  }
+};
+
 
   return (
     <div className="login-popup-overlay">
-      <form
-        onSubmit={onLogin}
-        className="login-popup-form"
-      >
+      <form onSubmit={onLogin} className="login-popup-form">
         <div className="login-popup-header">
           <h2>{currentState}</h2>
           <img

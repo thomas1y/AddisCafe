@@ -9,12 +9,17 @@ const Navbar = ({ setShowLogin }) => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { cartItems } = useContext(StoreContext);
+  const { cartItems, token, setToken } = useContext(StoreContext);
 
   const getTotalCartItems = () =>
     Object.values(cartItems).reduce((total, qty) => total + (qty > 0 ? qty : 0), 0);
 
-  // Smooth scroll helper
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken("");
+    navigate("/");
+  };
+
   const handleScrollTo = (e, target) => {
     e.preventDefault();
     const id = target.replace("#", "");
@@ -26,7 +31,6 @@ const Navbar = ({ setShowLogin }) => {
     }
   };
 
-  // Handle "Home" nav click — scroll to #hero and clear path if not root
   const handleHomeClick = (e) => {
     e.preventDefault();
     if (location.pathname !== "/") {
@@ -43,26 +47,24 @@ const Navbar = ({ setShowLogin }) => {
 
   const isActive = (target) => {
     if ((!location.hash || location.hash === "#hero") && target === "#hero") {
-      return true; // Home active by default
+      return true;
     }
     return location.hash === target;
   };
 
   useEffect(() => {
-    setOpen(false); // close mobile nav on route change
+    setOpen(false);
   }, [location]);
 
   return (
     <div id="navbar">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
-        {/* Logo - goes to home */}
         <div className="logo">
           <Link to="/" onClick={handleHomeClick}>
             <img src="/images/logo.png" alt="Logo" />
           </Link>
         </div>
 
-        {/* Nav links */}
         <div className={`navbar order-last order-lg-0 ${open ? "navbar-mobile" : ""}`}>
           <ul>
             {navs.map(({ id, name, target }) => (
@@ -88,14 +90,9 @@ const Navbar = ({ setShowLogin }) => {
             ))}
           </ul>
 
-          {/* Mobile nav toggle */}
-          <i
-            className="bi bi-list mobile-nav-toggle"
-            onClick={() => setOpen(!open)}
-          ></i>
+          <i className="bi bi-list mobile-nav-toggle" onClick={() => setOpen(!open)}></i>
         </div>
 
-        {/* Right side: icons & signup */}
         <div className="navbar-right d-flex align-items-center">
           <div className="navbar-icon">
             <FaSearch className="search-icon" />
@@ -110,12 +107,22 @@ const Navbar = ({ setShowLogin }) => {
             )}
           </div>
 
-          <button
-            className="btn btn-signup ms-3"
-            onClick={() => setShowLogin(true)}  // Open modal on click
-          >
-            Sign Up
-          </button>
+          {token ? (
+  <div className="account-dropdown">
+    <div className="account-label">Hello, User ▾</div>
+    <div className="dropdown-content">
+      <Link to="/myorders" className="dropdown-link">My Orders</Link>
+      <button className="dropdown-link logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  </div>
+) : (
+  <button className="btn btn-signup ms-3" onClick={() => setShowLogin(true)}>
+    Sign Up
+  </button>
+)}
+
         </div>
       </div>
     </div>

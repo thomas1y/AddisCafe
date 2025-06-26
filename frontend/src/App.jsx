@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import LoginPopup from "./components/LoginPopup";
@@ -15,7 +15,7 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <>
+    <BrowserRouter> {/* ✅ Added this wrapper */}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
       <div className="app">
         <Navbar showLogin={showLogin} setShowLogin={setShowLogin} />
@@ -28,7 +28,7 @@ const App = () => {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
-    </>
+    </BrowserRouter>
   );
 };
 
