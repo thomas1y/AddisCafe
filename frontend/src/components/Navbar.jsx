@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { StoreContext } from "../context/StoreContext.jsx";
@@ -7,6 +7,11 @@ import "./Navbar.css";
 
 const Navbar = ({ setShowLogin }) => {
   const [open, setOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const dropdownTimeout = useRef(null);
+
   const location = useLocation();
   const navigate = useNavigate();
   const { cartItems, token, setToken } = useContext(StoreContext);
@@ -56,6 +61,29 @@ const Navbar = ({ setShowLogin }) => {
     setOpen(false);
   }, [location]);
 
+  const handleDropdownEnter = () => {
+    if (dropdownTimeout.current) {
+      clearTimeout(dropdownTimeout.current);
+      dropdownTimeout.current = null;
+    }
+    setShowDropdown(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeout.current = setTimeout(() => {
+      setShowDropdown(false);
+    }, 300);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${searchQuery.trim()}`);
+      setShowSearch(false);
+      setSearchQuery("");
+    }
+  };
+
   return (
     <div id="navbar">
       <div className="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
@@ -94,8 +122,24 @@ const Navbar = ({ setShowLogin }) => {
         </div>
 
         <div className="navbar-right d-flex align-items-center">
-          <div className="navbar-icon">
-            <FaSearch className="search-icon" />
+          <div className="navbar-icon position-relative">
+            <FaSearch
+              className="search-icon"
+              onClick={() => setShowSearch(!showSearch)}
+              style={{ cursor: "pointer" }}
+            />
+            {showSearch && (
+              <form onSubmit={handleSearchSubmit} className="search-form">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="Search food..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                />
+              </form>
+            )}
           </div>
 
           <div className="navbar-icon ms-3 position-relative">
@@ -108,21 +152,29 @@ const Navbar = ({ setShowLogin }) => {
           </div>
 
           {token ? (
-  <div className="account-dropdown">
-    <div className="account-label">Hello, User ▾</div>
-    <div className="dropdown-content">
-      <Link to="/myorders" className="dropdown-link">My Orders</Link>
-      <button className="dropdown-link logout-btn" onClick={handleLogout}>
-        Logout
-      </button>
-    </div>
-  </div>
-) : (
-  <button className="btn btn-signup ms-3" onClick={() => setShowLogin(true)}>
-    Sign Up
-  </button>
-)}
+            <div
+              className="account-wrapper"
+              onMouseEnter={handleDropdownEnter}
+              onMouseLeave={handleDropdownLeave}
+            >
+              <div className="account-label">
+                Hello, {localStorage.getItem("userName") || "User"} ▾
+              </div>
 
+              <div className={`dropdown-content ${showDropdown ? "show" : ""}`}>
+                <Link to="/myorders" className="dropdown-link">
+                  My Orders
+                </Link>
+                <button className="dropdown-link logout-btn" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button className="btn btn-signup ms-3" onClick={() => setShowLogin(true)}>
+              Sign Up
+            </button>
+          )}
         </div>
       </div>
     </div>

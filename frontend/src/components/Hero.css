@@ -36,7 +36,7 @@
     font-weight: 700;
     line-height: 7.5rem;
     color: #fff;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-base);
 }
 
 #hero h1 span {
@@ -48,6 +48,7 @@
     color: #eee;
     margin: 10px 0 0 0;
     font-size: 2rem;
+    font-family: var(--font-base);
 }
 
 #hero .btns {

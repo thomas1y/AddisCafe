@@ -1,8 +1,9 @@
 /* Overlay background */
+/* Overlay background */
 .login-popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4); /* softer shadow */
+  background: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
   z-index: 1000;
@@ -11,7 +12,7 @@
 
 /* Popup container */
 .login-popup-form {
-  background: #fff; /* clean white */
+  background: #fff;
   padding: 2.5rem 3rem;
   border-radius: 8px;
   width: 400px;
@@ -43,7 +44,7 @@
   width: 26px;
   height: 26px;
   filter: grayscale(100%);
-  transition: filter 0.3s ease;
+  transition: filter 0.7s ease;
 }
 
 .login-popup-close:hover {
@@ -51,6 +52,12 @@
 }
 
 /* Input fields */
+.login-popup-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* ✅ space between inputs */
+}
+
 .login-popup-input {
   width: 100%;
   padding: 12px 14px;
@@ -62,7 +69,7 @@
 
 .login-popup-input:focus {
   outline: none;
-  border-color: #f90; /* Amazon orange */
+  border-color: #f90;
   box-shadow: 0 0 5px #f90a;
 }
 
@@ -84,7 +91,7 @@
 
 /* Submit button */
 .login-popup-submit-btn {
-  background-color: #f90; /* Amazon orange */
+  background-color: #f90;
   color: #111;
   border: none;
   padding: 12px 0;
@@ -97,7 +104,7 @@
 }
 
 .login-popup-submit-btn:hover {
-  background-color: #e68a00;
+  background-color: #ccaa45;
   box-shadow: 0 6px 12px rgba(230, 138, 0, 0.6);
 }
 
@@ -110,7 +117,7 @@
 
 .login-popup-link {
   cursor: pointer;
-  color: #0073bb; /* Amazon blue */
+  color: #0073bb;
   font-weight: 700;
   text-decoration: underline;
 }

@@ -15,42 +15,41 @@ const LoginPopup = ({ setShowLogin }) => {
     password: "",
   });
 
- const onLogin = async (event) => {
-  event.preventDefault();
-  let newUrl = url;
+  const onLogin = async (event) => {
+    event.preventDefault();
+    let newUrl = url;
 
-  if (currentState === "Login") {
-    newUrl += "/api/user/login";
-    const response = await axios.post(newUrl, userData);
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userName", response.data.name); // ✅ STORE NAME
-      setShowLogin(false);
+    if (currentState === "Login") {
+      newUrl += "/api/user/login";
+      const response = await axios.post(newUrl, userData);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.name);
+        setShowLogin(false);
+      } else {
+        alert(response.data.message);
+      }
     } else {
-      alert(response.data.message);
-    }
-  } else {
-    newUrl += "/api/user/register";
-    let response;
-    try {
-      response = await axios.post(newUrl, userData);
-    } catch (error) {
-      console.log(error);
-    }
+      newUrl += "/api/user/register";
+      let response;
+      try {
+        response = await axios.post(newUrl, userData);
+      } catch (error) {
+        console.log(error);
+      }
 
-    if (response?.data?.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userName", response.data.name); // ✅ STORE NAME
-      setShowLogin(false);
-      alert(response.data.message);
-    } else {
-      alert(response?.data?.message || "Registration failed");
+      if (response?.data?.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.name);
+        setShowLogin(false);
+        alert(response.data.message);
+      } else {
+        alert(response?.data?.message || "Registration failed");
+      }
     }
-  }
-};
-
+  };
 
   return (
     <div className="login-popup-overlay">
@@ -64,11 +63,12 @@ const LoginPopup = ({ setShowLogin }) => {
             className="login-popup-close"
           />
         </div>
+
         <div className="login-popup-inputs">
           {currentState === "Sign Up" && (
             <input
               type="text"
-              placeholder="Name"
+              placeholder="Enter your full name"
               required
               name="name"
               onChange={(e) => setUserData({ ...userData, name: e.target.value })}
@@ -77,7 +77,7 @@ const LoginPopup = ({ setShowLogin }) => {
           )}
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter your email address"
             required
             name="email"
             onChange={(e) => setUserData({ ...userData, email: e.target.value })}
@@ -85,7 +85,7 @@ const LoginPopup = ({ setShowLogin }) => {
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter your password"
             required
             name="password"
             onChange={(e) => setUserData({ ...userData, password: e.target.value })}
@@ -95,7 +95,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
         <div className="login-popup-terms">
           <input type="checkbox" required />
-          <p>By continuing, I agree to the terms of the use and privacy policy.</p>
+          <p>By continuing, I agree to the terms of use and privacy policy.</p>
         </div>
 
         <button type="submit" className="login-popup-submit-btn">

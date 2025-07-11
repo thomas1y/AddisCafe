@@ -33,7 +33,7 @@
 }
 
 #navbar .logo img {
-  height: 60px; /* adjust to your design */
+  height: 37px; /* adjust to your design */
   width: auto;
   display: block;
   object-fit: contain;
@@ -360,12 +360,13 @@
   margin-left: 20px;
 }
 /* Amazon-style Account Dropdown */
-.account-dropdown {
+/* Your existing CSS above... */
+
+/* Amazon-style Account Dropdown */
+.account-wrapper {
   position: relative;
   margin-left: 20px;
-  color: white;
   cursor: pointer;
-  font-size: 14px;
 }
 
 .account-label {
@@ -375,6 +376,7 @@
   background-color: transparent;
   color: #d9ba85;
   transition: background 0.3s;
+  user-select: none;
 }
 
 .account-label:hover {
@@ -393,9 +395,10 @@
   z-index: 1000;
   border-radius: 8px;
   padding: 10px 0;
+  user-select: none;
 }
 
-.account-dropdown:hover .dropdown-content {
+.dropdown-content.show {
   display: block;
 }
 
@@ -421,8 +424,30 @@
   cursor: pointer;
   font-size: 14px;
   color: #c0392b;
+  user-select: none;
 }
 
 .logout-btn:hover {
   background-color: #fceeee;
+}
+
+/* Add your other existing CSS below this */
+.search-form {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  z-index: 1000;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: flex;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  padding: 6px 10px;
+  width: 180px;
+  font-size: 14px;
 }

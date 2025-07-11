@@ -23,7 +23,7 @@
 }
 
 .footer-content-left img {
-    height: 60px; /* adjust to your design */
+    height: 40px; /* adjust to your design */
     width: auto;
   //display: block;
   object-fit: contain;
@@ -42,6 +42,7 @@
 
 .footer-content-right h2, .footer-content-center h2 {
     color: white;
+    font-family: var(--font-base);
 }
 
 .footer-social-icons img {
@@ -56,4 +57,52 @@
     margin: 20px 0;
     background-color: grey;
     border:  none;
+}
+
+/* Mobile responsive footer */
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr; /* stack columns vertically */
+    gap: 30px;
+    text-align: center;
+  }
+
+  .footer-content-left,
+  .footer-content-center,
+  .footer-content-right {
+    align-items: center; /* center items on small screens */
+  }
+
+  .footer-content-left img {
+    margin: 0 auto;
+  }
+
+  .footer-social-icons img {
+    margin: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 5vw;
+    gap: 16px;
+  }
+
+  .footer-content {
+    gap: 20px;
+  }
+
+  .footer-content-right h2,
+  .footer-content-center h2 {
+    font-size: 1.2rem;
+  }
+
+  .footer-social-icons img {
+    width: 30px; /* smaller icons on very small devices */
+  }
+
+  .footer hr {
+    height: 1px;
+    margin: 15px 0;
+  }
 }
