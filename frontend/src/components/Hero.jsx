@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Glightbox from 'glightbox';
-import './hero.css';
+import './Hero.css';
 import HeroBtn from './HeroBtn';
 
 const Hero = () => {
