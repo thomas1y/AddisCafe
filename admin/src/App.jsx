@@ -1,10 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import AddPage from "./pages/Add/AddPage";
 import ListPage from "./pages/List/ListPage";
 import OrderPage from "./pages/Orders/OrderPage";
-import ProtectedRoute from "./components/ProtectedRoute";  // <-- ADD THIS
+import ProtectedRoute from "./components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,11 +14,15 @@ const App = () => {
       <ToastContainer />
       <Navbar />
       <hr />
-      <div className='app-content'>
+      <div className="app-content">
         <Sidebar />
         <Routes>
+          {/* ✅ Redirect from root to /add */}
+          <Route path="/" element={<Navigate to="/add" replace />} />
+
+          {/* ✅ Protected routes */}
           <Route
-            path='/add'
+            path="/add"
             element={
               <ProtectedRoute>
                 <AddPage />
@@ -26,7 +30,7 @@ const App = () => {
             }
           />
           <Route
-            path='/list'
+            path="/list"
             element={
               <ProtectedRoute>
                 <ListPage />
@@ -34,13 +38,16 @@ const App = () => {
             }
           />
           <Route
-            path='/orders'
+            path="/orders"
             element={
               <ProtectedRoute>
                 <OrderPage />
               </ProtectedRoute>
             }
           />
+
+          {/* ✅ Fallback route for unmatched paths */}
+          <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </div>
     </div>
