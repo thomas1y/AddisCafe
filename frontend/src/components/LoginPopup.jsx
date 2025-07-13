@@ -21,14 +21,20 @@ const LoginPopup = ({ setShowLogin }) => {
 
     if (currentState === "Login") {
       newUrl += "/api/user/login";
-      const response = await axios.post(newUrl, userData);
-      if (response.data.success) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userName", response.data.name);
-        setShowLogin(false);
-      } else {
-        alert(response.data.message);
+      try {
+        const response = await axios.post(newUrl, userData);
+        if (response.data.success) {
+          setToken(response.data.token);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userName", response.data.name);
+          localStorage.setItem("userRole", response.data.role); // ✅ Store user role
+          setShowLogin(false);
+        } else {
+          alert(response.data.message);
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Login failed. Please try again.");
       }
     } else {
       newUrl += "/api/user/register";
@@ -36,13 +42,16 @@ const LoginPopup = ({ setShowLogin }) => {
       try {
         response = await axios.post(newUrl, userData);
       } catch (error) {
-        console.log(error);
+        console.log("Registration error:", error);
+        alert("Registration failed. Try again.");
+        return;
       }
 
       if (response?.data?.success) {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.name);
+        localStorage.setItem("userRole", response.data.role); // ✅ Store user role
         setShowLogin(false);
         alert(response.data.message);
       } else {

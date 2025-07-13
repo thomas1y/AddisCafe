@@ -3,9 +3,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
-// Create JWT token
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET_KEY);
+// Create JWT token — include both id and role
+const createToken = (id, role) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET_KEY, { expiresIn: "3d" });
 };
 
 //! LOGIN USER
@@ -22,11 +22,12 @@ const loginUser = async (req, res) => {
       return res.json({ success: false, message: "Incorrect password." });
     }
 
-    const token = createToken(user._id);
+    const token = createToken(user._id, user.role);
     res.json({
       success: true,
       token,
-      name: user.name, // ✅ Include name in response
+      name: user.name,
+      role: user.role, // ✅ Include role
     });
   } catch (error) {
     console.log("Login error: " + error.message);
@@ -61,16 +62,17 @@ const registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      role: "user",
+      role: "user", // ✅ default role
     });
 
     const newUser = await user.save();
 
-    const token = createToken(newUser._id);
+    const token = createToken(newUser._id, newUser.role);
     res.json({
       success: true,
       token,
-      name: newUser.name, // ✅ Include name in response
+      name: newUser.name,
+      role: newUser.role, // ✅ Include role
       message: "User has been registered.",
     });
   } catch (error) {

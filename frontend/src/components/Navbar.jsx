@@ -21,6 +21,8 @@ const Navbar = ({ setShowLogin }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("userRole");
     setToken("");
     navigate("/");
   };
@@ -57,10 +59,6 @@ const Navbar = ({ setShowLogin }) => {
     return location.hash === target;
   };
 
-  useEffect(() => {
-    setOpen(false);
-  }, [location]);
-
   const handleDropdownEnter = () => {
     if (dropdownTimeout.current) {
       clearTimeout(dropdownTimeout.current);
@@ -83,6 +81,14 @@ const Navbar = ({ setShowLogin }) => {
       setSearchQuery("");
     }
   };
+
+  // ✅ Redirect admin users
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    if (token && role === "admin") {
+      window.location.href = "https://addiscafe-admin.onrender.com";
+    }
+  }, [token]);
 
   return (
     <div id="navbar">
