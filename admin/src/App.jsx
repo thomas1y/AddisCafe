@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import AddPage from "./pages/Add/AddPage";
@@ -10,17 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <div>
+    <HashRouter>
       <ToastContainer />
       <Navbar />
       <hr />
       <div className="app-content">
         <Sidebar />
         <Routes>
-          {/* ✅ Redirect from root to /add */}
           <Route path="/" element={<Navigate to="/add" replace />} />
-
-          {/* ✅ Protected routes */}
           <Route
             path="/add"
             element={
@@ -45,12 +42,10 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
-          {/* ✅ Fallback route for unmatched paths */}
-          <Route path="*" element={<div>Page Not Found</div>} />
+          <Route path="*" element={<div>404 - Page Not Found</div>} />
         </Routes>
       </div>
-    </div>
+    </HashRouter>
   );
 };
 
