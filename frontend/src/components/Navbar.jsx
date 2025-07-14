@@ -1,3 +1,4 @@
+// FRONTEND Navbar.jsx
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
@@ -24,8 +25,19 @@ const Navbar = ({ setShowLogin }) => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userRole");
     setToken("");
-    navigate("/"); // Redirect to home on logout
+    navigate("/");
   };
+
+  // ✅ Admin redirect logic (only if not already on admin URL)
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    if (token && role === "admin") {
+      const isOnAdmin = window.location.href.includes("localhost:5165");
+      if (!isOnAdmin) {
+        window.location.href = "http://localhost:5165";
+      }
+    }
+  }, [token]);
 
   const handleScrollTo = (e, target) => {
     e.preventDefault();
@@ -52,25 +64,17 @@ const Navbar = ({ setShowLogin }) => {
     setOpen(false);
   };
 
-  const isActive = (target) => {
-    if ((!location.hash || location.hash === "#hero") && target === "#hero") {
-      return true;
-    }
-    return location.hash === target;
-  };
+  const isActive = (target) =>
+    ((!location.hash || location.hash === "#hero") && target === "#hero") ||
+    location.hash === target;
 
   const handleDropdownEnter = () => {
-    if (dropdownTimeout.current) {
-      clearTimeout(dropdownTimeout.current);
-      dropdownTimeout.current = null;
-    }
+    clearTimeout(dropdownTimeout.current);
     setShowDropdown(true);
   };
 
   const handleDropdownLeave = () => {
-    dropdownTimeout.current = setTimeout(() => {
-      setShowDropdown(false);
-    }, 300);
+    dropdownTimeout.current = setTimeout(() => setShowDropdown(false), 300);
   };
 
   const handleSearchSubmit = (e) => {
@@ -81,16 +85,6 @@ const Navbar = ({ setShowLogin }) => {
       setSearchQuery("");
     }
   };
-
-  // Redirect admin users to admin panel if not already there
-  useEffect(() => {
-    const role = localStorage.getItem("userRole");
-    if (token && role === "admin") {
-      if (!window.location.href.includes("localhost:5165")) {
-        window.location.href = "http://localhost:5165"; // Replace with deployed URL if needed
-      }
-    }
-  }, [token]);
 
   return (
     <div id="navbar">
@@ -130,12 +124,7 @@ const Navbar = ({ setShowLogin }) => {
 
         <div className="navbar-right d-flex align-items-center">
           <div className="navbar-icon position-relative">
-            <FaSearch
-              className="search-icon"
-              onClick={() => setShowSearch(!showSearch)}
-              style={{ cursor: "pointer" }}
-              aria-label="Toggle search"
-            />
+            <FaSearch className="search-icon" onClick={() => setShowSearch(!showSearch)} />
             {showSearch && (
               <form onSubmit={handleSearchSubmit} className="search-form">
                 <input
@@ -145,18 +134,17 @@ const Navbar = ({ setShowLogin }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
-                  aria-label="Search food"
                 />
               </form>
             )}
           </div>
 
           <div className="navbar-icon ms-3 position-relative">
-            <Link to="/cart" aria-label="View cart">
+            <Link to="/cart">
               <FaShoppingCart className="cart-icon" style={{ color: "#cda45e" }} />
             </Link>
             {getTotalCartItems() > 0 && (
-              <span className="cart-badge" aria-live="polite">{getTotalCartItems()}</span>
+              <span className="cart-badge">{getTotalCartItems()}</span>
             )}
           </div>
 
@@ -166,29 +154,21 @@ const Navbar = ({ setShowLogin }) => {
               onMouseEnter={handleDropdownEnter}
               onMouseLeave={handleDropdownLeave}
             >
-              <div className="account-label" tabIndex={0} aria-haspopup="true" aria-expanded={showDropdown}>
+              <div className="account-label">
                 Hello, {localStorage.getItem("userName") ?? "User"} ▾
               </div>
 
-              <div className={`dropdown-content ${showDropdown ? "show" : ""}`} role="menu">
-                <Link to="/myorders" className="dropdown-link" role="menuitem">
+              <div className={`dropdown-content ${showDropdown ? "show" : ""}`}>
+                <Link to="/myorders" className="dropdown-link">
                   My Orders
                 </Link>
-                <button
-                  className="dropdown-link logout-btn"
-                  onClick={handleLogout}
-                  role="menuitem"
-                >
+                <button className="dropdown-link logout-btn" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
             </div>
           ) : (
-            <button
-              className="btn btn-signup ms-3"
-              onClick={() => setShowLogin(true)}
-              aria-label="Sign up"
-            >
+            <button className="btn btn-signup ms-3" onClick={() => setShowLogin(true)}>
               Sign Up
             </button>
           )}
@@ -199,3 +179,4 @@ const Navbar = ({ setShowLogin }) => {
 };
 
 export default Navbar;
+
