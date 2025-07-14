@@ -24,7 +24,7 @@ const Navbar = ({ setShowLogin }) => {
     localStorage.removeItem("userName");
     localStorage.removeItem("userRole");
     setToken("");
-    navigate("/");
+    navigate("/"); // Redirect to home on logout
   };
 
   const handleScrollTo = (e, target) => {
@@ -82,11 +82,13 @@ const Navbar = ({ setShowLogin }) => {
     }
   };
 
-  // ✅ Redirect admin users
+  // Redirect admin users to admin panel if not already there
   useEffect(() => {
     const role = localStorage.getItem("userRole");
     if (token && role === "admin") {
-      window.location.href = "https://addiscafe-admin.onrender.com";
+      if (!window.location.href.includes("localhost:5165")) {
+        window.location.href = "http://localhost:5165"; // Replace with deployed URL if needed
+      }
     }
   }, [token]);
 
@@ -123,7 +125,6 @@ const Navbar = ({ setShowLogin }) => {
               </li>
             ))}
           </ul>
-
           <i className="bi bi-list mobile-nav-toggle" onClick={() => setOpen(!open)}></i>
         </div>
 
@@ -133,6 +134,7 @@ const Navbar = ({ setShowLogin }) => {
               className="search-icon"
               onClick={() => setShowSearch(!showSearch)}
               style={{ cursor: "pointer" }}
+              aria-label="Toggle search"
             />
             {showSearch && (
               <form onSubmit={handleSearchSubmit} className="search-form">
@@ -143,17 +145,18 @@ const Navbar = ({ setShowLogin }) => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   autoFocus
+                  aria-label="Search food"
                 />
               </form>
             )}
           </div>
 
           <div className="navbar-icon ms-3 position-relative">
-            <Link to="/cart">
+            <Link to="/cart" aria-label="View cart">
               <FaShoppingCart className="cart-icon" style={{ color: "#cda45e" }} />
             </Link>
             {getTotalCartItems() > 0 && (
-              <span className="cart-badge">{getTotalCartItems()}</span>
+              <span className="cart-badge" aria-live="polite">{getTotalCartItems()}</span>
             )}
           </div>
 
@@ -163,21 +166,29 @@ const Navbar = ({ setShowLogin }) => {
               onMouseEnter={handleDropdownEnter}
               onMouseLeave={handleDropdownLeave}
             >
-              <div className="account-label">
-                Hello, {localStorage.getItem("userName") || "User"} ▾
+              <div className="account-label" tabIndex={0} aria-haspopup="true" aria-expanded={showDropdown}>
+                Hello, {localStorage.getItem("userName") ?? "User"} ▾
               </div>
 
-              <div className={`dropdown-content ${showDropdown ? "show" : ""}`}>
-                <Link to="/myorders" className="dropdown-link">
+              <div className={`dropdown-content ${showDropdown ? "show" : ""}`} role="menu">
+                <Link to="/myorders" className="dropdown-link" role="menuitem">
                   My Orders
                 </Link>
-                <button className="dropdown-link logout-btn" onClick={handleLogout}>
+                <button
+                  className="dropdown-link logout-btn"
+                  onClick={handleLogout}
+                  role="menuitem"
+                >
                   Logout
                 </button>
               </div>
             </div>
           ) : (
-            <button className="btn btn-signup ms-3" onClick={() => setShowLogin(true)}>
+            <button
+              className="btn btn-signup ms-3"
+              onClick={() => setShowLogin(true)}
+              aria-label="Sign up"
+            >
               Sign Up
             </button>
           )}
