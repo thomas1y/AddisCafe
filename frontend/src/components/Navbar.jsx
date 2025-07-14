@@ -29,16 +29,7 @@ const Navbar = ({ setShowLogin }) => {
   };
 
   // ✅ Admin redirect logic (only if not already on admin URL)
-  useEffect(() => {
-    const role = localStorage.getItem("userRole");
-    if (token && role === "admin") {
-      const isOnAdmin = window.location.href.includes("localhost:5165");
-      if (!isOnAdmin) {
-        window.location.href = "http://localhost:5165";
-      }
-    }
-  }, [token]);
-
+  
   const handleScrollTo = (e, target) => {
     e.preventDefault();
     const id = target.replace("#", "");
